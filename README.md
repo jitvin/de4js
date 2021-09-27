@@ -6,13 +6,13 @@ JavaScript Deobfuscator and Unpacker
 
 ## Helper
 
-The **Unreadable** option is disabled by default, because it uses data from [JS Nice](http://www.jsnice.org/). This cannot be done with JavaScript. You need to install UserScript [de4js_helper.user.js](https://github.com/lelinhtinh/de4js/blob/master/userscript/de4js_helper.user.js) to enable it.
+The **Unreadable** option is disabled by default, because it uses data from [JS Nice](http://www.jsnice.org/). This cannot be done with JavaScript. You need to install UserScript [de4js_helper.user.js](https://github.com/jitvin/de4js/blob/master/userscript/de4js_helper.user.js) to enable it.
 
 Install one of the following links:
 
 - [Open User JS](https://openuserjs.org/scripts/baivong/de4js_helper)
 - [Greasy Fork](https://greasyfork.org/vi/scripts/33479-de4js-helper)
-- [Github](https://lelinhtinh.github.io/de4js/userscript/de4js_helper.user.js)
+- [Github](https://jitvin.github.io/de4js/userscript/de4js_helper.user.js)
 
 `*` _**de4js helper** doesn't work offline._
 
@@ -51,7 +51,7 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
 ### Install
 
-    git clone https://github.com/lelinhtinh/de4js.git
+    git clone https://github.com/jitvin/de4js.git
     cd de4js
 
 If you don't have Ruby installed, install [Ruby 2.1.0 or higher](https://www.ruby-lang.org/en/downloads/).
@@ -93,13 +93,13 @@ Preview **de4js** in your web browser at <http://localhost:4000/de4js/>
 
 ## License
 
-[MIT License](https://baivong.mit-license.org/) © [lelinhtinh](https://github.com/lelinhtinh)
+[MIT License](https://baivong.mit-license.org/) © [jitvin](https://github.com/jitvin)
 
 ## Credits
 
 ### Active Contributors
 
-- [lelinhtinh](https://github.com/lelinhtinh)
+- [jitvin](https://github.com/jitvin)
 - [Himura2la](https://github.com/Himura2la)
 - [Flleeppyy](https://github.com/flleeppyy)
 
