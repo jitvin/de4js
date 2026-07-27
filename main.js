@@ -240,6 +240,7 @@
     },
     decode = debounce(function () {
       if (temp === '') temp = input.value.trim();
+      updateStats(temp);
       temp = temp.replace(/\/\*(?!\s*@de4js)[\s\S]*?\*\/|^[\s\t]*\/\/.*/gm, '');
       if (temp === '') return;
 
@@ -349,6 +350,7 @@
     setTimeout(function () {
       input.value = '';
       temp = '';
+      updateStats('');
     }, 0);
 
     if (workerDecode) {
@@ -470,4 +472,158 @@
     temp = readable.value;
     format();
   };
+
+  // Real-time Code Statistics Logic
+  var statChars = document.getElementById('stat-chars');
+  var statLines = document.getElementById('stat-lines');
+  var statSize = document.getElementById('stat-size');
+
+  function updateStats(code) {
+    if (!statChars || !statLines || !statSize) return;
+    var charCount = code ? code.length : 0;
+    var lineCount = code ? code.split(/\r\n|\r|\n/).length : 0;
+    if (code === '') lineCount = 0;
+
+    var byteCount = code ? new Blob([code]).size : 0;
+
+    statChars.textContent = charCount.toLocaleString();
+    statLines.textContent = lineCount.toLocaleString();
+
+    var sizeStr = '0 B';
+    if (byteCount > 0) {
+      var k = 1024;
+      var sizes = ['B', 'KB', 'MB'];
+      var i = Math.floor(Math.log(byteCount) / Math.log(k));
+      sizeStr = parseFloat((byteCount / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+    statSize.textContent = sizeStr;
+  }
+
+  // Theme Switching Logic
+  var themeToggleBtn = document.getElementById('theme-toggle');
+  var currentTheme = localStorage.getItem('de4js-theme') || 'dark';
+
+  function applyTheme(theme) {
+    if (theme === 'light') {
+      document.documentElement.classList.add('light-theme');
+      document.documentElement.classList.remove('dark-theme');
+    } else {
+      document.documentElement.classList.add('dark-theme');
+      document.documentElement.classList.remove('light-theme');
+    }
+    localStorage.setItem('de4js-theme', theme);
+  }
+
+  // Initialize Theme
+  applyTheme(currentTheme);
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', function () {
+      var nextTheme = document.documentElement.classList.contains('light-theme') ? 'dark' : 'light';
+      applyTheme(nextTheme);
+    });
+  }
+
+  // Code Snippets Manager Logic
+  var snippetNameInput = document.getElementById('snippet-name');
+  var snippetSaveBtn = document.getElementById('snippet-save');
+  var snippetsEmptyText = document.getElementById('snippets-empty');
+  var snippetListContainer = document.getElementById('snippet-list');
+
+  function getSnippets() {
+    try {
+      return JSON.parse(localStorage.getItem('de4js-snippets')) || [];
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function saveSnippets(snippets) {
+    localStorage.setItem('de4js-snippets', JSON.stringify(snippets));
+  }
+
+  function renderSnippets() {
+    if (!snippetListContainer || !snippetsEmptyText) return;
+    var snippets = getSnippets();
+
+    if (snippets.length === 0) {
+      snippetsEmptyText.style.display = 'block';
+      snippetListContainer.innerHTML = '';
+      return;
+    }
+
+    snippetsEmptyText.style.display = 'none';
+    snippetListContainer.innerHTML = '';
+
+    snippets.forEach(function (snippet) {
+      var li = document.createElement('li');
+      li.className = 'snippet-item';
+
+      var nameBtn = document.createElement('button');
+      nameBtn.type = 'button';
+      nameBtn.className = 'snippet-name-btn';
+      nameBtn.textContent = snippet.name;
+      nameBtn.title = 'Load snippet: ' + snippet.name;
+      nameBtn.addEventListener('click', function () {
+        var stringTab = document.querySelector('[data-target="String"]');
+        if (stringTab) {
+          stringTab.click();
+        }
+
+        setTimeout(function() {
+          input.value = snippet.code;
+          temp = snippet.code;
+          decode();
+        }, 50);
+      });
+
+      var deleteBtn = document.createElement('button');
+      deleteBtn.type = 'button';
+      deleteBtn.className = 'snippet-delete-btn';
+      deleteBtn.title = 'Delete snippet';
+      deleteBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>';
+      deleteBtn.addEventListener('click', function () {
+        var updated = getSnippets().filter(function (s) {
+          return s.id !== snippet.id;
+        });
+        saveSnippets(updated);
+        renderSnippets();
+      });
+
+      li.appendChild(nameBtn);
+      li.appendChild(deleteBtn);
+      snippetListContainer.appendChild(li);
+    });
+  }
+
+  if (snippetSaveBtn) {
+    snippetSaveBtn.addEventListener('click', function () {
+      var name = snippetNameInput.value.trim();
+      var code = temp || input.value.trim();
+
+      if (!code) {
+        alert('There is no code to save!');
+        return;
+      }
+
+      if (!name) {
+        var date = new Date();
+        name = 'Snippet ' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+      }
+
+      var snippets = getSnippets();
+      snippets.push({
+        id: Date.now(),
+        name: name,
+        code: code
+      });
+
+      saveSnippets(snippets);
+      snippetNameInput.value = '';
+      renderSnippets();
+    });
+  }
+
+  // Initial render of snippets
+  renderSnippets();
 })();

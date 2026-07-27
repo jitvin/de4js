@@ -25,7 +25,8 @@ exclude:
     "Dockerfile",
     "docker-compose.yml",
     "docker-entrypoint.sh",
-    "workbox-config.js"
+    "workbox-config.js",
+    "vendor"
   ]
 incremental: false
 
