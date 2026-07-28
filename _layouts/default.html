@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: 'en-US' }}">
+<html lang="{{ site.lang | default: 'en-US' }}" class="dark-theme">
 
 <head>
   <meta charset='utf-8'>
@@ -7,129 +7,224 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="favicon.ico">
   <link rel="manifest" href="manifest.webmanifest">
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Mono&amp;subset=latin-ext,vietnamese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ 'assets/css/style.css' | relative_url }}">
   {% seo %}
 </head>
 
 <body>
 
-  <header>
-    <div class="container">
-      <h1 id="title">{{ site.name }}<sup>{{ site.version }}</sup></h1>
-      <h2>{{ site.description }}</h2>
+  <header class="app-navbar">
+    <div class="container navbar-container">
+      <div class="navbar-brand">
+        <img class="navbar-logo" src="{{ 'assets/images/icons/icon-128x128.png' | relative_url }}" alt="de4js logo">
+        <div class="brand-text">
+          <h1 id="title">{{ site.name }}<span class="version-badge">{{ site.version }}</span></h1>
+          <h2>{{ site.description }}</h2>
+        </div>
+      </div>
 
-      <section id="downloads">
-        {% if site.show_downloads %}
-        <a href="{{ site.github.zip_url }}" class="btn">Download as .zip</a>
-        <a href="{{ site.github.tar_url }}" class="btn">Download as .tar.gz</a> {% endif %}
+      <div class="navbar-actions">
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle" class="btn btn-theme" type="button" aria-label="Toggle light/dark theme">
+          <span class="theme-icon theme-icon-dark">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+            </svg>
+          </span>
+          <span class="theme-icon theme-icon-light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0V.5A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+            </svg>
+          </span>
+          <span class="btn-theme-text">Toggle Theme</span>
+        </button>
+
         <a href="{{ site.github.repository_url }}" target="_blank" class="btn btn-github">
-          <span class="icon"></span>
-          View on GitHub
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 6px; vertical-align: middle;">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          <span>GitHub</span>
         </a>
-      </section>
+      </div>
     </div>
   </header>
 
-  <div class="container">
-    <section id="main_content">
-      <div class="tabs">
-        <div class="tab active" data-target="String">String</div>
-        <div class="tab" data-target="Local">Local File</div>
-        <div class="tab" data-target="Remote">Remote File</div>
-      </div>
-      <div class="cf"></div>
-      <div class="tabs-contents">
-        <div class="tab-content show" id="contentString">
-          <textarea id="input" class="content" rows="7" placeholder="Paste code here..."></textarea>
-        </div>
-        <div class="tab-content" id="contentLocal">
-          <div class="box">
-            <input type="file" name="file" id="file" class="inputfile" accept="text/javascript,text/plain">
-            <label for="file" class="read-only">
-              <span id="fileName"></span>
-              <strong>Choose a file…</strong>
-            </label>
+  <main id="main_content" class="container app-main">
+    <div class="app-grid">
+      <!-- Left Column: Inputs, Controls, Configurations -->
+      <div class="app-sidebar">
+
+        <!-- Input panel tabbed -->
+        <div class="panel-card input-panel">
+          <div class="tabs">
+            <div class="tab active" data-target="String">String</div>
+            <div class="tab" data-target="Local">Local File</div>
+            <div class="tab" data-target="Remote">Remote File</div>
           </div>
-          <pre id="renderLocal" class="render read-only"></pre>
-        </div>
-        <div class="tab-content" id="contentRemote">
-          <form class="form-wrapper cf" id="formRemove">
-            <input type="url" placeholder="Enter a URL" id="urlRemove" required>
-            <button type="submit" class="btn" id="submitRemove">Submit</button>
-          </form>
-          <small>Cross-origin requests require Access-Control-Allow-Origin header</small>
-          <pre id="renderRemove" class="render read-only"></pre>
-        </div>
-      </div>
-
-      <div class="config tab-content show">
-        <form name="de4js">
-          <div class="methods-wrap">
-            <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
-            <label for="none">None</label>
-            {% for opt in site.data.methods %}
-            <input id="{{ opt.key }}" class="magic-radio de4js-method" type="radio" value="{{ opt.key }}" name="encode">
-            <label for="{{ opt.key }}">{{ opt.name }}</label>
-            {% endfor %}
-            <input id="nicify" class="magic-radio" type="radio" value="nicify" name="encode" disabled>
-            <label for="nicify">
-              <a href="https://github.com/jitvin/de4js/blob/master/README.md#helper" target="_blank"
-                class="help">Unreadable</a>
-            </label>
+          <div class="tabs-contents">
+            <div class="tab-content show" id="contentString">
+              <textarea id="input" class="content" rows="7" placeholder="Paste your obfuscated JavaScript code here..."></textarea>
+            </div>
+            <div class="tab-content" id="contentLocal">
+              <div class="box">
+                <input type="file" name="file" id="file" class="inputfile" accept="text/javascript,text/plain">
+                <label for="file" class="read-only">
+                  <span id="fileName"></span>
+                  <strong>Choose a file…</strong>
+                </label>
+              </div>
+              <pre id="renderLocal" class="render read-only"></pre>
+            </div>
+            <div class="tab-content" id="contentRemote">
+              <form class="form-wrapper cf" id="formRemove">
+                <input type="url" placeholder="Enter file URL (e.g., https://example.com/script.js)" id="urlRemove" required>
+                <button type="submit" class="btn btn-submit" id="submitRemove">Submit</button>
+              </form>
+              <small>Cross-origin requests require Access-Control-Allow-Origin header on the remote server</small>
+              <pre id="renderRemove" class="render read-only"></pre>
+            </div>
           </div>
-          <div class="options-wrap">
-            {% for opt in site.data.options %}
-            <input id="{{ opt.key }}" class="magic-checkbox de4js-option" type="checkbox" value="yes"
-              name="{{ opt.key }}" {% if opt.checked %} checked {% endif %}>
-            <label for="{{ opt.key }}">{{ opt.name }}</label>
-            {% endfor %}
-          </div>
-        </form>
-      </div>
-
-      <div class="center">
-        <button id="clear" class="btn" type="reset">
-          Clear
-        </button>
-        <button id="auto" class="btn" type="button">
-          Auto Decode
-        </button>
-      </div>
-
-      <div class="view-wrap">
-        <div class="view-control">
-          <button id="copyjs" class="btn" type="button">
-            <img class="btn-icon" src="{{ 'assets/images/buttons/copy-document.png' | relative_url }}"
-              alt="Copy to clipboard">
-          </button>
-          <a id="download" class="btn" type="button" href="#" download="result.js">
-            <img class="btn-icon" src="{{ 'assets/images/buttons/download.png' | relative_url }}" alt="Download file">
-          </a>
-          <a id="preview" class="btn" type="button" href="#">
-            <img class="btn-icon" src="{{ 'assets/images/buttons/external-link-symbol.png' | relative_url }}"
-              alt="Open in new tab">
-          </a>
         </div>
-        <textarea id="readable"></textarea>
-        <pre id="view" class="hljs"></pre>
-      </div>
-    </section>
 
-    <footer id="footer">
-      <section class="sponsors">
-        <h3>About</h3>
-        <p>JavaScript Deobfuscator and Unpacker by Oathan Rex.</p>
-      </section>
-      <section class="credits">
-        <h3>Credits</h3>
-        <p>Project maintained by <a href="https://oathanrex.blogspot.com" title="oathanex">Oathan Rex</a>
-          <br>Hosted on GitHub Pages
-        </p>
-       
-      </section>
-    </footer>
-  </div>
+        <!-- Code Analytics Panel -->
+        <div class="panel-card stats-panel">
+          <div class="panel-header">
+            <h3>Code Analytics</h3>
+          </div>
+          <div class="panel-body">
+            <div class="stats-grid">
+              <div class="stat-item">
+                <span class="stat-label">Characters</span>
+                <span class="stat-value" id="stat-chars">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Lines of Code</span>
+                <span class="stat-value" id="stat-lines">0</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Estimated Size</span>
+                <span class="stat-value" id="stat-size">0 B</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Configuration Panel -->
+        <div class="panel-card config-panel">
+          <div class="panel-header">
+            <h3>Decoder Configuration</h3>
+          </div>
+          <div class="panel-body">
+            <div class="config show">
+              <form name="de4js">
+                <div class="section-title">Decoding Method</div>
+                <div class="methods-grid">
+                  <div class="radio-option">
+                    <input id="none" class="magic-radio" type="radio" value="" name="encode" checked>
+                    <label for="none">None (Format only)</label>
+                  </div>
+                  {% for opt in site.data.methods %}
+                  <div class="radio-option">
+                    <input id="{{ opt.key }}" class="magic-radio de4js-method" type="radio" value="{{ opt.key }}" name="encode">
+                    <label for="{{ opt.key }}">{{ opt.name }}</label>
+                  </div>
+                  {% endfor %}
+                  <div class="radio-option">
+                    <input id="nicify" class="magic-radio" type="radio" value="nicify" name="encode" disabled>
+                    <label for="nicify">
+                      <a href="https://github.com/jitvin/de4js/blob/master/README.md#helper" target="_blank" class="help">Unreadable</a>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="section-title">Beautifier / Optimizer Options</div>
+                <div class="options-grid">
+                  {% for opt in site.data.options %}
+                  <div class="checkbox-option">
+                    <input id="{{ opt.key }}" class="magic-checkbox de4js-option" type="checkbox" value="yes" name="{{ opt.key }}" {% if opt.checked %} checked {% endif %}>
+                    <label for="{{ opt.key }}">{{ opt.name }}</label>
+                  </div>
+                  {% endfor %}
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saved Snippets Panel -->
+        <div class="panel-card snippets-panel">
+          <div class="panel-header">
+            <h3>Saved Snippets</h3>
+          </div>
+          <div class="panel-body">
+            <div class="snippet-actions">
+              <input type="text" id="snippet-name" placeholder="Snippet name...">
+              <button type="button" id="snippet-save" class="btn btn-primary">Save Code</button>
+            </div>
+            <div id="snippets-empty" class="snippets-empty">No snippets saved yet.</div>
+            <ul id="snippet-list" class="snippet-list"></ul>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Code Viewer / Deobfuscated Output -->
+      <div class="app-viewer">
+        <div class="panel-card output-panel">
+          <div class="panel-header output-header">
+            <h3>Deobfuscated Output</h3>
+            <div class="header-actions">
+              <button id="clear" class="btn btn-secondary" type="reset">Clear</button>
+              <button id="auto" class="btn btn-accent" type="button">Auto Decode</button>
+            </div>
+          </div>
+          <div class="panel-body output-body">
+            <div class="view-wrap">
+              <div class="view-control">
+                <button id="copyjs" class="btn-control" type="button" title="Copy to clipboard">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="btn-icon">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span class="btn-text">Copy</span>
+                </button>
+                <a id="download" class="btn-control" type="button" href="#" download="result.js" title="Download file">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="btn-icon">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span class="btn-text">Download</span>
+                </a>
+                <a id="preview" class="btn-control" type="button" href="#" target="_blank" title="Open in new tab">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" class="btn-icon">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                  <span class="btn-text">Preview</span>
+                </a>
+              </div>
+              <textarea id="readable"></textarea>
+              <pre id="view" class="hljs"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer id="footer" class="app-footer">
+    <div class="container footer-container">
+      <div class="footer-left">
+        <p>JavaScript Deobfuscator & Unpacker by <a href="https://oathanrex.blogspot.com" target="_blank" title="oathanex">Oathan Rex</a></p>
+      </div>
+      <div class="footer-right">
+        <p>Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a> | Source on <a href="{{ site.github.repository_url }}" target="_blank">GitHub</a></p>
+      </div>
+    </div>
+  </footer>
 
   <script type="text/javascript" src="{{ 'third_party/clipboard-js/clipboard.min.js' | relative_url }}"></script>
   <script src="{{ 'main.js' | relative_url }}" type="text/javascript"></script>
