@@ -483,12 +483,12 @@
     var charCount = code ? code.length : 0;
     var lineCount = code ? code.split(/\r\n|\r|\n/).length : 0;
     if (code === '') lineCount = 0;
-
+    
     var byteCount = code ? new Blob([code]).size : 0;
-
+    
     statChars.textContent = charCount.toLocaleString();
     statLines.textContent = lineCount.toLocaleString();
-
+    
     var sizeStr = '0 B';
     if (byteCount > 0) {
       var k = 1024;
@@ -545,20 +545,20 @@
   function renderSnippets() {
     if (!snippetListContainer || !snippetsEmptyText) return;
     var snippets = getSnippets();
-
+    
     if (snippets.length === 0) {
       snippetsEmptyText.style.display = 'block';
       snippetListContainer.innerHTML = '';
       return;
     }
-
+    
     snippetsEmptyText.style.display = 'none';
     snippetListContainer.innerHTML = '';
-
+    
     snippets.forEach(function (snippet) {
       var li = document.createElement('li');
       li.className = 'snippet-item';
-
+      
       var nameBtn = document.createElement('button');
       nameBtn.type = 'button';
       nameBtn.className = 'snippet-name-btn';
@@ -569,14 +569,14 @@
         if (stringTab) {
           stringTab.click();
         }
-
+        
         setTimeout(function() {
           input.value = snippet.code;
           temp = snippet.code;
           decode();
         }, 50);
       });
-
+      
       var deleteBtn = document.createElement('button');
       deleteBtn.type = 'button';
       deleteBtn.className = 'snippet-delete-btn';
@@ -589,7 +589,7 @@
         saveSnippets(updated);
         renderSnippets();
       });
-
+      
       li.appendChild(nameBtn);
       li.appendChild(deleteBtn);
       snippetListContainer.appendChild(li);
@@ -600,24 +600,24 @@
     snippetSaveBtn.addEventListener('click', function () {
       var name = snippetNameInput.value.trim();
       var code = temp || input.value.trim();
-
+      
       if (!code) {
         alert('There is no code to save!');
         return;
       }
-
+      
       if (!name) {
         var date = new Date();
         name = 'Snippet ' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
       }
-
+      
       var snippets = getSnippets();
       snippets.push({
         id: Date.now(),
         name: name,
         code: code
       });
-
+      
       saveSnippets(snippets);
       snippetNameInput.value = '';
       renderSnippets();
